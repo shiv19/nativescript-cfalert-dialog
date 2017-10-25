@@ -66,6 +66,7 @@ export class CFAlertDialog {
                         dialog.dismiss();
                         return;
                     })
+                builder.show();
             // } catch(e) {
             //     reject({
             //         status: false,
