@@ -1,0 +1,7 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" class="page"
+  xmlns:ui="nativescript-cfalert-dialog">
+  <StackLayout class="p-20">
+    <Label text="CFAlert Dialog Demo" class="t-20 text-center c-black" textWrap="true"/>
+    <Button text="Show Dialog" tap="{{ showDialog }}" />
+  </StackLayout>
+</Page>

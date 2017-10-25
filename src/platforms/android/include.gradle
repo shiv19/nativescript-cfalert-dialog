@@ -1,0 +1,19 @@
+/* Include.gradle configuration: http://docs.nativescript.org/plugins/plugins#includegradle-specification */
+
+android {
+	productFlavors {
+		"nativescript-cfalert-dialog" {
+			dimension "nativescript-cfalert-dialog"
+		}
+	}
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+    maven { url "https://dl.bintray.com/crowdfire/cfalertdialog" }
+}
+
+dependencies {
+  compile 'com.crowdfire.cfalertdialog:cfalertdialog:1.0.1'
+}
