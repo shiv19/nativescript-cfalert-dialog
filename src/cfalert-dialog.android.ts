@@ -96,7 +96,10 @@ class Listener implements android.content.DialogInterface.OnClickListener {
 
 export class CFAlertDialog {
     public show(options: DialogOptions) {
-        options = options || {};
+        options = options || {
+            title: "Hello World",
+            dialogStyle: alertStyle
+        };
 
         var builder = new Builder(app.android.foregroundActivity);
 
