@@ -54,7 +54,7 @@ export class CFAlertDialog {
         var _options = options || {};
         
         return new Promise<{}>((resolve, reject) => {
-            try{
+            // try{
                 var builder = new CFAD.Builder(app.android.context)
                     .setDialogStyle(CFAlertStyle.ALERT)
                     .setTitle("Hello World!")
@@ -66,12 +66,12 @@ export class CFAlertDialog {
                         dialog.dismiss();
                         return;
                     })
-            } catch(e) {
-                reject({
-                    status: false,
-                    error: "Could not show dialog"
-                })
-            }
+            // } catch(e) {
+            //     reject({
+            //         status: false,
+            //         error: "Could not show dialog"
+            //     })
+            // }
         });
     }
 }
