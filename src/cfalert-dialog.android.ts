@@ -1,24 +1,5 @@
 import * as app from 'tns-core-modules/application';
 
-export enum CFAlertStyle {
-    NOTIFICATION = 0,
-    ALERT = 1,
-    BOTTOM_SHEET = 2
-}
-
-export enum CFAlertActionStyle{
-    DEFAULT = 0,
-    NEGATIVE = 1,
-    POSITIVE = 2
-}
-
-export enum CFAlertActionAlignment {
-    START = 0,
-    END = 1,
-    CENTER = 2,
-    JUSTIFIED = 3
-}
-
 // declare module com {
 //     export module crowdfire {
 //         export module cfalertdialog {
@@ -48,32 +29,62 @@ export enum CFAlertActionAlignment {
 //     }
 // }
 
-// var CFAD = com.crowdfire.cfalertdialog.CFAlertDialog;
+export interface DialogOptions {
+    dialogStyle?: string;
+    title?: string;
+    titleColor?: string,
+    message?: string;
+    messageColor?: string;
+    action?: string;
+    textAlignment?: string;
+    backgroundColor?: string,
+    buttons?: [{
+        text: string,
+        buttonStyle: string,
+        buttonAlignment: string,
+        callBack: Function
+    }]
+}
+
 declare var com: any;
+var Builder = com.crowdfire.cfalertdialog.CFAlertDialog.Builder;
+
+var alertStyle = com.crowdfire.cfalertdialog.CFAlertDialog.CFAlertStyle.ALERT;
+var bottomSheetStyle = com.crowdfire.cfalertdialog.CFAlertDialog.CFAlertStyle.BOTTOM_SHEET;
+var notificationStyle = com.crowdfire.cfalertdialog.CFAlertDialog.CFAlertStyle.NOTIFICATION;
+
+var actionDefault = com.crowdfire.cfalertdialog.CFAlertDialog.CFAlertActionStyle.DEFAULT;
+var actionNegative = com.crowdfire.cfalertdialog.CFAlertDialog.CFAlertActionStyle.NEGATIVE;
+var actionPositive = com.crowdfire.cfalertdialog.CFAlertDialog.CFAlertActionStyle.POSITIVE;
+
+var alignStart = com.crowdfire.cfalertdialog.CFAlertDialog.CFAlertActionAlignment.START;
+var alignEnd = com.crowdfire.cfalertdialog.CFAlertDialog.CFAlertActionAlignment.END;
+var alignCenter = com.crowdfire.cfalertdialog.CFAlertDialog.CFAlertActionAlignment.CENTER;
+var alignJustified = com.crowdfire.cfalertdialog.CFAlertDialog.CFAlertActionAlignment.JUSTIFIED;
+
+var gravityStart = com.crowdfire.cfalertdialog.CFAlertDialog.Gravity.START;
+var gravityCenterHorizontal = com.crowdfire.cfalertdialog.CFAlertDialog.Gravity.CENTER_HORIZONTAL;
+var gravityEnd = com.crowdfire.cfalertdialog.CFAlertDialog.Gravity.END;
+
 export class CFAlertDialog {
     public show(options) {
         var _options = options || {};
         
         return new Promise<{}>((resolve, reject) => {
-            // try{
-                var builder = new com.crowdfire.cfalertdialog.CFAlertDialog.Builder(app.android.foregroundActivity)
-                    .setDialogStyle(CFAlertStyle.ALERT)
+            try{
+                var builder = new Builder(app.android.foregroundActivity)
+                    .setDialogStyle(com.crowdfire.cfalertdialog.CFAlertDialog.CFAlertStyle.ALERT)
                     .setTitle("Hello World!")
-                    .setMessage("Alert worked!")
-                    .addButton("Super", -1, -1, CFAlertActionStyle.POSITIVE, CFAlertActionAlignment.END, (dialog, which) => {
-                        resolve({
-                            status: true
-                        });
-                        dialog.dismiss();
-                        return;
-                    })
+                    .setMessage("Alert worked!");
+                    
+                console.log("trying to call builder.show");
                 builder.show();
-            // } catch(e) {
-            //     reject({
-            //         status: false,
-            //         error: "Could not show dialog"
-            //     })
-            // }
+            } catch(e) {
+                reject({
+                    status: false,
+                    error: "Could not show dialog, check options array"
+                })
+            }
         });
     }
 }
