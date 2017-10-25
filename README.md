@@ -1,4 +1,4 @@
-# nativescript-cfalert-dialog [![npm](https://img.shields.io/npm/dt/express.svg)](https://www.npmjs.com/package/nativescript-cfalert-dialog) [![npm](https://img.shields.io/npm/v/nativescript-cfalert-dialog)](https://www.npmjs.com/package/nativescript-cfalert-dialog)
+# nativescript-cfalert-dialog [![npm](https://img.shields.io/npm/dt/express.svg)](https://www.npmjs.com/package/nativescript-cfalert-dialog)
 
 [![Twitter URL](https://img.shields.io/badge/twitter-%40MultiShiv19-blue.svg)](https://twitter.com/MultiShiv19)
 
@@ -24,7 +24,7 @@ tns plugin add nativescript-cfalert-dialog
 
 ## Usage 
 
-NativeScript Core with { TypeScript } (works on Core and Angular as well)
+NativeScript Core with { TypeScript } (works on Core, Angular and Vue as well)
 
 ```js
 
