@@ -1,12 +1,19 @@
-<Page xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" class="page"
+<Page class="page" xmlns="http://schemas.nativescript.org/tns.xsd" loaded="pageLoaded" class="page"
   xmlns:ui="nativescript-cfalert-dialog">
-  <StackLayout class="p-20">
-    <Label text="CFAlert Dialog Demo" class="t-20 text-center c-black" textWrap="true"/>
-    <Button text="Show Notification" tap="{{ showNotification }}" />
-    <Button text="Show Alert" tap="{{ showAlert }}" />
-    <Button text="Show Bottom Sheet" tap="{{ showBottomSheet }}" />
-    <Button text="Show Simple List" tap="{{ showSimpleList }}" />
-    <Button text="Show Single Choice List" tap="{{ showSingleChoiceList }}" />
-    <Button text="Show Multi Choice List" tap="{{ showMultiChoiceList }}" />
-  </StackLayout>
+  <Page.actionBar>
+    <ActionBar class="action-bar" title="CFAlert Dialog Demo">
+    </ActionBar>
+  </Page.actionBar>
+  <GridLayout rows="" columns="">
+      <Image src="~/landscape.jpg" stretch="aspectFill" />
+      <StackLayout class="p-20">
+        <Button class="btn btn-primary" text="Show Notification" tap="{{ showNotification }}" />
+        <Button class="btn btn-primary" text="Show Alert" tap="{{ showAlert }}" />
+        <Button class="btn btn-primary" text="Show Bottom Sheet" tap="{{ showBottomSheet }}" />
+        <Button class="btn btn-primary" text="Show Simple List" tap="{{ showSimpleList }}" />
+        <Button class="btn btn-primary" text="Show Single Choice List" tap="{{ showSingleChoiceList }}" />
+        <Button class="btn btn-primary" text="Show Multi Choice List" tap="{{ showMultiChoiceList }}" />
+        <Button class="btn btn-primary" text="Show Colored Alert" tap="{{ showColoredAlert }}" />
+      </StackLayout>
+  </GridLayout>
 </Page>

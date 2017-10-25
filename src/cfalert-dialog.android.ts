@@ -1,34 +1,5 @@
 import * as app from 'tns-core-modules/application';
-import { Color } from "tns-core-modules/color";
-
-// declare module com {
-//     export module crowdfire {
-//         export module cfalertdialog {
-//             export class CFAlertDialog extends android.support.v7.app.AppCompatDialog {
-//                 public show():void;
-//                 public dismiss():void;
-//                 public setBackgroundColor(color: any, animated: boolean):void;
-//                 public setDialogBackgroundColor(color: any, animated: boolean):void;
-//                 public setCornerRadius(radius: number):void;
-//                 public setTitle(title: any):void;
-//                 public setTitleColor(color: any):void;
-//                 public setMessage(message: string):void;
-//                 public setMessageColor(color: number):void;
-//                 public setDialogStyle(dialogStyle: CFAlertStyle):void;
-//                 public setTextGravity(textGravity: number):void;
-//                 public setHeaderView(view: android.view.View):void;
-//                 public setIcon(drawable: any):void;
-//                 public setContentImageDrawable(drawable: any):void;
-//                 public setFooterView(view: android.view.View):void;
-//                 public setItems(items: string[], OnClickListener: any):void;
-//                 public setMultiSelectItems(multiSelectItems: string[], selectedItems: boolean[], OnMultiChoiceClickListener: any):void;
-//                 public setSingleSelectItems(singleSelectItems: string[], selectedItem: number, OnClickListener: any):void;
-//                 public setElevation(elevation: number);
-//                 public static Builder;
-//             }
-//         }
-//     }
-// }
+import { Color } from 'tns-core-modules/color';
 
 export enum CFAlertStyle {
     NOTIFICATION = 0,
@@ -56,38 +27,39 @@ export enum CFAlertGravity {
 }
 
 export interface DialogOptions {
-    dialogStyle?: CFAlertStyle;
-    title?: string;
+    dialogStyle: CFAlertStyle;
+    title: string;
     titleColor?: string,
     message?: string;
     messageColor?: string;
+    textColor?: string;
     textAlignment?: CFAlertGravity;
     backgroundColor?: string,
     cancellable?: boolean,
     headerView?: any, // nativeView
     footerView?: any, // nativeView
-    onDismiss?: Function, // calback for dismiss
+    onDismiss?: Function, // Callback for dismiss
     buttons?: [{
         text: string, // title
         buttonStyle: CFAlertActionStyle,
-        buttonAlignment: CFAlertActionAlignment,
-        textColor: string,
-        backgroundColor: string,
+        buttonAlignment?: CFAlertActionAlignment,
+        textColor?: string,
+        backgroundColor?: string,
         onClick: Function
     }],    
     simpleList?: {
         items: [string],
-        onClick: Function
+        onClick: Function // Callback for onclick
     },
     singleChoiceList?: {
         items: [string],
         selectedItem: number,
-        onClick: Function
+        onClick: Function // Callback for onclick
     },
     multiChoiceList?: {
         items: [string],
         selectedItems: [boolean],
-        onClick: Function
+        onClick: Function // Callback for onclick
     }
 }
 
@@ -116,94 +88,81 @@ var gravityCenterHorizontal = android.view.Gravity.CENTER_HORIZONTAL;
 var gravityEnd = android.view.Gravity.END;
 var gravity = [gravityStart, gravityCenterHorizontal, gravityEnd];
 
+class Listener implements android.content.DialogInterface.OnClickListener {
+    public onClick(dialog, which) {
+        dialog.dismiss();
+    }
+}
+
 export class CFAlertDialog {
     public show(options: DialogOptions) {
         options = options || {};
-        
-        return new Promise<{}>((resolve, reject) => {
-            // try{
-                var builder = new Builder(app.android.foregroundActivity);
 
-                if (typeof options.dialogStyle !== undefined) {
-                    builder.setDialogStyle(styles[options.dialogStyle]);
-                    console.log("setDialogStyle");
-                }
-                if (typeof options.title !== undefined) { builder.setTitle(options.title); console.log("setTitle"); }
-                if (typeof options.titleColor !== undefined) { builder.setTitleColor(new Color(options.titleColor).android); console.log("setTitleColor"); }
-                if (typeof options.message !== undefined) { builder.setMessage(options.message); console.log("setMessage"); }
-                if (typeof options.messageColor !== undefined) { builder.setMessageColor(new Color(options.messageColor).android); console.log("setMessageColor"); }
-                if (typeof options.textAlignment !== undefined) {
-                    builder.setTextGravity(gravity[options.textAlignment]);
-                    console.log("setDialogStyle");
-                }
-                if (typeof options.backgroundColor !== undefined) { builder.setBackgroundColor(new Color(options.backgroundColor).android); console.log("setBackgroundColor"); }
-                if (options.cancellable === true) {
-                    builder.setCancelable(true); console.log("setCancelableTrue");
-                } else {
-                    builder.setCancelable(false); console.log("setCancelableTrue");
-                }
-                
-                if (typeof options.headerView !== undefined) { builder.setHeaderView(options.headerView); console.log("setHeaderView"); }
-                if (typeof options.footerView !== undefined) { builder.setFooterView(options.footerView); console.log("setFooterView"); }
-                
-                if (typeof options.onDismiss !== undefined) { builder.setOnDismissListener(new android.content.DialogInterface.OnDismissListener({
-                    onDismiss: (dialog) => {
-                        options.onDismiss(dialog);
+        var builder = new Builder(app.android.foregroundActivity);
+
+        if (typeof options.dialogStyle !== undefined) { builder.setDialogStyle(styles[options.dialogStyle]); }
+
+        if (options.title) { builder.setTitle(options.title); }
+        if (options.message) { builder.setMessage(options.message); }
+
+        if (typeof options.textAlignment !== undefined) { builder.setTextGravity(gravity[options.textAlignment]); }
+
+        if (options.backgroundColor) { builder.setBackgroundColor(new Color(options.backgroundColor).android); }
+        if (options.textColor) { builder.setTextColor(new Color(options.textColor).android); }
+
+        if (options.cancellable) { builder.setCancelable(options.cancellable); }
+
+        if (options.headerView) { builder.setHeaderView(options.headerView); }
+        if (options.footerView) { builder.setFooterView(options.footerView); }
+
+        if (options.buttons) {
+            for (var button of options.buttons) {
+                builder.addButton(button.text,
+                -1, -1,
+                actionStyles[button.buttonStyle],
+                alignment[button.buttonAlignment], new android.content.DialogInterface.OnClickListener({
+                    onClick: function (dialog, which) {
+                        button.onClick(dialog, which);
+                        dialog.dismiss();
                     }
-                })); console.log("setOnDismissListener");  }
-                if (typeof options.buttons !== undefined) {
-                    for (var button of options.buttons) {
-                        builder.addButton(button.text,
-                            new Color(button.textColor).android,
-                            new Color(button.backgroundColor).android,
-                            actionStyles[button.buttonStyle],
-                            alignment[options.textAlignment],
-                                new android.content.DialogInterface.OnClickListener({
-                                    onClick: (dialog, which) => {
-                                        button.onClick(dialog, which);
-                                        dialog.dismiss();
-                                    }
-                            }));
-                            console.log("addButton");
-                    }
-                }                
-                if (typeof options.simpleList !== undefined) { builder.setItems(options.simpleList.items, new android.content.DialogInterface.OnClickListener({
-                        onClick: (dialogInterface, index) => {
-                            options.simpleList.onClick(dialogInterface, index);
-                            dialogInterface.dismiss();
-                        }
-                    }));
-                    console.log("setItems");
+                }));
+            }
+        }
+
+        if (options.simpleList) { builder.setItems(options.simpleList.items, new android.content.DialogInterface.OnClickListener({
+                onClick: (dialogInterface, index) => {
+                    options.simpleList.onClick(dialogInterface, index);
+                    dialogInterface.dismiss();
                 }
-                if (typeof options.singleChoiceList !== undefined) { builder.setSingleChoiceItems(options.singleChoiceList.items, options.singleChoiceList.selectedItem,
-                    new android.content.DialogInterface.OnClickListener({
-                        onClick: (dialogInterface, index) => {
-                            options.singleChoiceList.onClick(dialogInterface, index);
-                        }
-                    }));
-                    console.log("setSingleChoiceItems");
+            }));
+        }
+
+        if (options.singleChoiceList) { builder.setSingleChoiceItems(options.singleChoiceList.items, options.singleChoiceList.selectedItem,
+            new android.content.DialogInterface.OnClickListener({
+                onClick: (dialogInterface, index) => {
+                    options.singleChoiceList.onClick(dialogInterface, index);
                 }
-                if (typeof options.multiChoiceList !== undefined) { builder.setMultiChoiceItems(options.multiChoiceList.items, options.multiChoiceList.selectedItems,
-                    new android.content.DialogInterface.OnClickListener({
-                        onClick: (dialogInterface, index, state) => {
-                            options.multiChoiceList.onClick(dialogInterface, index, state);
-                        }
-                    }));
-                    console.log("setMultiChoiceItems");
+            }));
+        }
+
+        if (options.multiChoiceList) { builder.setMultiChoiceItems(options.multiChoiceList.items, [false,false,false,false],
+            new android.content.DialogInterface.OnMultiChoiceClickListener({
+                onClick: (dialogInterface, index, b) => {
+                    options.multiChoiceList.onClick(dialogInterface, index, b);
                 }
-                
-                console.log("trying to show");
-                builder.show();
-            //     resolve({
-            //         status: true,
-            //         statusText: "Dialog shown successfully"
-            //     })
-            // } catch(e) {
-            //     reject({
-            //         status: false,
-            //         error: "Could not show dialog, check options array"
-            //     })
-            // }
-        });
+            }));
+        }
+
+        var alertDialog = builder.show();
+        
+        if (options.titleColor) { alertDialog.setTitleColor(new Color(options.titleColor).android); }
+        if (options.messageColor) { alertDialog.setMessageColor(new Color(options.messageColor).android); }
+        if (options.onDismiss) { alertDialog.setOnDismissListener(
+            new android.content.DialogInterface.OnDismissListener({
+                onDismiss: function (dialog) {
+                    options.onDismiss(dialog);
+                }
+            }));
+        }
     }
 }

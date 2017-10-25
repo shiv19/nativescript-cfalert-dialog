@@ -15,15 +15,6 @@ export class HelloWorldModel extends Observable {
     this.cfalertDialog = new CFAlertDialog();
   }
 
-  showCFDialog = function(options) {
-    console.log("showing dialog");
-    this.cfalertDialog.show(options).then((result) => {
-      console.dir(result);
-    }).catch((error) => {
-      console.dir(error);
-    })
-  }
-
   showNotification = function() {
     let options: DialogOptions = {
       dialogStyle: CFAlertStyle.NOTIFICATION,
@@ -31,28 +22,60 @@ export class HelloWorldModel extends Observable {
       message: "It is shown at the top of the screen",
       onDismiss: function (dialog) {
         console.log("Dialog was dismissed");
-      }
+      },
+      buttons: [
+        {
+          text: "Okay",
+          buttonStyle: CFAlertActionStyle.POSITIVE,
+          buttonAlignment: CFAlertActionAlignment.END,
+          textColor: "#FFFFFF",
+          backgroundColor: "#000000",
+          onClick: function (dialog, which) {
+            console.log(dialog);
+            console.log(which);
+          }
+        }
+      ]
     }
-    this.showCFDialog(options);
+    this.cfalertDialog.show(options);
   }
 
   showAlert = function() {
     let options: DialogOptions = {
       dialogStyle: CFAlertStyle.ALERT,
       title: "This is an alert!",
-      message: "It is shown at the center of the screen",
-      textAlignment: CFAlertGravity.END
+      message: "It is shown at the center of the screen"
     }
-    this.showCFDialog(options);
+    this.cfalertDialog.show(options);
   }
 
   showBottomSheet = function() {
     let options: DialogOptions = {
       dialogStyle: CFAlertStyle.BOTTOM_SHEET,
       title: "This is a bottom sheet!",
-      message: "It is shown at the bottom of the screen"
+      message: "It is shown at the bottom of the screen",
+      buttons: [
+        {
+          text: "Okay",
+          buttonStyle: CFAlertActionStyle.POSITIVE,
+          buttonAlignment: CFAlertActionAlignment.JUSTIFIED,
+          onClick: function (dialog, which) {
+            console.log(dialog);
+            console.log(which);
+          }
+        },
+        {
+          text: "Nope",
+          buttonStyle: CFAlertActionStyle.NEGATIVE,
+          buttonAlignment: CFAlertActionAlignment.JUSTIFIED,
+          onClick: function (dialog, which) {
+            console.log(dialog);
+            console.log(which);
+          }
+        }
+      ]
     }
-    this.showCFDialog(options);
+    this.cfalertDialog.show(options);
   }
 
   showSimpleList = function() {
@@ -67,7 +90,7 @@ export class HelloWorldModel extends Observable {
         }
       }
     }
-    this.showCFDialog(options);
+    this.cfalertDialog.show(options);
   }
 
   showSingleChoiceList = function() {
@@ -87,8 +110,6 @@ export class HelloWorldModel extends Observable {
           text: "Okay",
           buttonStyle: CFAlertActionStyle.POSITIVE,
           buttonAlignment: CFAlertActionAlignment.END,
-          textColor: "#FFFFFF",
-          backgroundColor: "#000000",
           onClick: function (dialog, which) {
             console.log(dialog);
             console.log(which);
@@ -96,19 +117,21 @@ export class HelloWorldModel extends Observable {
         }
       ]
     }
-    this.showCFDialog(options);
+    this.cfalertDialog.show(options);
   }
 
   showMultiChoiceList = function() {
+    let itemState: [ boolean ] = [false,false,false,false];
     let options: DialogOptions = {
       dialogStyle: CFAlertStyle.ALERT,
       title: "This is a simple list!",
       multiChoiceList: {
         items: ["Tomato", "Potato", "Carrot", "Spinach"],
-        selectedItems: [false, true, false, true],
-        onClick: function(dialogInterface, index) {
+        selectedItems: itemState,
+        onClick: function (dialogInterface, index, b) {
           console.log(dialogInterface);
           console.log(index);
+          console.log(b);
         }
       },
       buttons: [
@@ -116,8 +139,6 @@ export class HelloWorldModel extends Observable {
           text: "Okay",
           buttonStyle: CFAlertActionStyle.POSITIVE,
           buttonAlignment: CFAlertActionAlignment.END,
-          textColor: "#FFFFFF",
-          backgroundColor: "#000000",
           onClick: function (dialog, which) {
             console.log(dialog);
             console.log(which);
@@ -125,6 +146,17 @@ export class HelloWorldModel extends Observable {
         }
       ]
     }
-    this.showCFDialog(options);
+    this.cfalertDialog.show(options);
+  }
+  showColoredAlert = function() {
+    let options: DialogOptions = {
+      dialogStyle: CFAlertStyle.ALERT,
+      title: "This is an alert!",
+      message: "It is shown at the center of the screen",
+      titleColor: "#FF0000",
+      messageColor: "#0000FF",
+      backgroundColor: "#00FF00"
+    }
+    this.cfalertDialog.show(options);
   }
 }

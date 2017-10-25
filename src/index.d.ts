@@ -21,12 +21,13 @@ export enum CFAlertGravity {
 }
 
 export interface DialogOptions {
-    dialogStyle?: CFAlertStyle;
-    title?: string;
+    dialogStyle: CFAlertStyle;
+    title: string;
     titleColor?: string,
     message?: string;
     messageColor?: string;
-    textAlignment?: CFAlertActionAlignment;
+    textColor?: string;
+    textAlignment?: CFAlertGravity;
     backgroundColor?: string,
     cancellable?: boolean,
     headerView?: any, // nativeView
@@ -35,9 +36,9 @@ export interface DialogOptions {
     buttons?: [{
         text: string, // title
         buttonStyle: CFAlertActionStyle,
-        buttonAlignment: CFAlertActionAlignment,
-        textColor: string,
-        backgroundColor: string,
+        buttonAlignment?: CFAlertActionAlignment,
+        textColor?: string,
+        backgroundColor?: string,
         onClick: Function
     }],    
     simpleList?: {
@@ -56,5 +57,5 @@ export interface DialogOptions {
     }
 }
 export declare class CFAlertDialog {
-    show(options: any): Promise<{}>;
+    show(options: any): void;
 }
