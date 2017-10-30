@@ -66,6 +66,7 @@ export interface DialogOptions {
     textColor?: string;
     textAlignment?: CFAlertGravity;
     backgroundColor?: string,
+    backgroundBlur?: string, // iOS only!
     cancellable?: boolean,
     headerView?: any, // nativeView
     footerView?: any, // nativeView
@@ -76,7 +77,7 @@ export interface DialogOptions {
         buttonAlignment?: CFAlertActionAlignment,
         textColor?: string,
         backgroundColor?: string,
-        onClick: Function // function (dialog, which)
+        onClick: Function // function (buttonName)
     }],    
     simpleList?: {
         items: [string],
