@@ -6,6 +6,10 @@ import { CFAlertDialog,
          CFAlertActionStyle,
          CFAlertStyle } from 'nativescript-cfalert-dialog';
 
+import { StackLayout } from "tns-core-modules/ui/layouts/stack-layout";
+import { Label } from "tns-core-modules/ui/label";
+import * as frame from "tns-core-modules/ui/frame";
+
 export class HelloWorldModel extends Observable {
   private cfalertDialog: CFAlertDialog;
 
@@ -16,10 +20,12 @@ export class HelloWorldModel extends Observable {
   }
 
   showNotification = function() {
+      
     let options: DialogOptions = {
       dialogStyle: CFAlertStyle.NOTIFICATION,
       title: "This is a notification!",
-      message: "It is shown at the top of the screen",
+      message: "It is shown at the top of the screen, and the background is blurry.",
+      backgroundBlur: true,
       onDismiss: function (dialog) {
         console.log("Dialog was dismissed");
       },
@@ -30,9 +36,8 @@ export class HelloWorldModel extends Observable {
           buttonAlignment: CFAlertActionAlignment.END,
           textColor: "#FFFFFF",
           backgroundColor: "#000000",
-          onClick: function (dialog, which) {
-            console.log(dialog);
-            console.log(which);
+          onClick: function (response) {
+            console.log(response);
           }
         }
       ]
@@ -44,6 +49,8 @@ export class HelloWorldModel extends Observable {
     let options: DialogOptions = {
       dialogStyle: CFAlertStyle.ALERT,
       title: "This is an alert!",
+      backgroundBlur: false,
+      backgroundColor: "red",
       message: "It is shown at the center of the screen"
     }
     this.cfalertDialog.show(options);
@@ -59,18 +66,16 @@ export class HelloWorldModel extends Observable {
           text: "Okay",
           buttonStyle: CFAlertActionStyle.POSITIVE,
           buttonAlignment: CFAlertActionAlignment.JUSTIFIED,
-          onClick: function (dialog, which) {
-            console.log(dialog);
-            console.log(which);
+          onClick: function (response) {
+            console.log(response);
           }
         },
         {
           text: "Nope",
           buttonStyle: CFAlertActionStyle.NEGATIVE,
           buttonAlignment: CFAlertActionAlignment.JUSTIFIED,
-          onClick: function (dialog, which) {
-            console.log(dialog);
-            console.log(which);
+          onClick: function (response) {
+            console.log(response);
           }
         }
       ]
@@ -90,7 +95,9 @@ export class HelloWorldModel extends Observable {
         }
       }
     }
-    this.cfalertDialog.show(options);
+    this.cfalertDialog.show(options).catch(error => {
+        console.log(error);
+    });
   }
 
   showSingleChoiceList = function() {
@@ -110,9 +117,8 @@ export class HelloWorldModel extends Observable {
           text: "Okay",
           buttonStyle: CFAlertActionStyle.POSITIVE,
           buttonAlignment: CFAlertActionAlignment.END,
-          onClick: function (dialog, which) {
-            console.log(dialog);
-            console.log(which);
+          onClick: function (response) {
+            console.log(response);
           }
         }
       ]
@@ -139,9 +145,8 @@ export class HelloWorldModel extends Observable {
           text: "Okay",
           buttonStyle: CFAlertActionStyle.POSITIVE,
           buttonAlignment: CFAlertActionAlignment.END,
-          onClick: function (dialog, which) {
-            console.log(dialog);
-            console.log(which);
+          onClick: function (response) {
+            console.log(response);
           }
         }
       ]

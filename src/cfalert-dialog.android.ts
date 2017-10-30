@@ -1,6 +1,7 @@
 import * as app from 'tns-core-modules/application';
 import { Color } from 'tns-core-modules/color';
 
+
 export enum CFAlertStyle {
     NOTIFICATION = 0,
     ALERT = 1,
@@ -35,6 +36,7 @@ export interface DialogOptions {
     textColor?: string;
     textAlignment?: CFAlertGravity;
     backgroundColor?: string,
+    backgroundBlur?: boolean, // iOS only
     cancellable?: boolean,
     headerView?: any, // nativeView
     footerView?: any, // nativeView

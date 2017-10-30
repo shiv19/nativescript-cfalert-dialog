@@ -29,6 +29,7 @@ export interface DialogOptions {
     textColor?: string;
     textAlignment?: CFAlertGravity;
     backgroundColor?: string,
+    backgroundBlur?: boolean,
     cancellable?: boolean,
     headerView?: any, // nativeView
     footerView?: any, // nativeView

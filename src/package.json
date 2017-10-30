@@ -27,6 +27,7 @@
         "plugin.link": "npm link && cd ../demo && npm link nativescript-cfalert-dialog && cd ../src",
         "plugin.tscwatch": "npm run tsc -- -w",
         "demo.ios": "npm i && npm run tsc && cd ../demo && tns run ios --syncAllFiles",
+        "debug.ios": "npm i && npm run tsc && cd ../demo && tns debug ios --syncAllFiles",
         "demo.android": "npm i && npm run tsc && cd ../demo && tns run android --syncAllFiles",
         "demo.reset": "cd ../demo && rimraf platforms",
         "plugin.prepare": "npm run tsc && cd ../demo && tns plugin remove nativescript-cfalert-dialog && tns plugin add ../src",
