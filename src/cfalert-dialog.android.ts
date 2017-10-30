@@ -224,8 +224,8 @@ export class CFAlertDialog {
         if (options.onDismiss) {
             alertDialog.setOnDismissListener(
                 new android.content.DialogInterface.OnDismissListener({
-                    onDismiss: function(dialog) {
-                        options.onDismiss(dialog);
+                    onDismiss: function() {
+                        options.onDismiss();
                     }
                 })
             );

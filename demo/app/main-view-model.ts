@@ -24,7 +24,7 @@ export class HelloWorldModel extends Observable {
     let options: DialogOptions = {
       dialogStyle: CFAlertStyle.NOTIFICATION,
       title: "This is a notification!",
-      message: "It is shown at the top of the screen, and the background is blurry.",
+      message: "It is shown at the top of the screen, and the background is blurry (in iOS).",
       backgroundBlur: true,
       onDismiss: function (dialog) {
         console.log("Dialog was dismissed");
@@ -48,10 +48,10 @@ export class HelloWorldModel extends Observable {
   showAlert = function() {
     let options: DialogOptions = {
       dialogStyle: CFAlertStyle.ALERT,
-      title: "This is an alert!",
+      title: "This is an alert with a red background and no buttons!",
       backgroundBlur: false,
       backgroundColor: "red",
-      message: "It is shown at the center of the screen"
+      message: "It is shown at the center of the screen, and you can tap outside of it to dismiss it."
     }
     this.cfalertDialog.show(options);
   }
@@ -95,9 +95,7 @@ export class HelloWorldModel extends Observable {
         }
       }
     }
-    this.cfalertDialog.show(options).catch(error => {
-        console.log(error);
-    });
+    this.cfalertDialog.show(options);
   }
 
   showSingleChoiceList = function() {

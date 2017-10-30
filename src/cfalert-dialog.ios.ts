@@ -88,7 +88,7 @@ export class CFAlertDialog {
             options.headerView, 
             options.footerView, 
             () => {
-                console.log('dismissed');
+                if (options.onDismiss) options.onDismiss();
             }
         )
 
