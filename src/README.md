@@ -14,7 +14,7 @@ This plugin is a wrapper around `CFAlertDialog` for Android and `CFAlertViewCont
 <img src="https://github.com/shiv19/nativescript-cfalert-dialog/blob/master/assets/demoandroid.gif?raw=true" height="640" > 
 
 ### iOS
-<video src="https://d3vv6lp55qjaqc.cloudfront.net/items/2M0E1q1k1r3p353t2R0i/cfalert.mov" autoplay="true" controls="false" style="display: block;height: 640px;width: auto;">cfalert.mov</video>
+<img src="https://github.com/shiv19/nativescript-cfalert-dialog/blob/master/assets/iosdemo.gif?raw=true" height="640" > 
 
 ## Installation
 
