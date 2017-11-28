@@ -151,7 +151,8 @@ export class CFAlertDialog {
         }
 
         if (options.buttons) {
-            for (var button of options.buttons) {
+            for (let i = 0; i < options.buttons.length; i++) {
+                const button = options.buttons[i];
                 builder.addButton(
                     button.text,
                     -1,
