@@ -22,6 +22,10 @@ This plugin is a wrapper around `CFAlertDialog` for Android and `CFAlertViewCont
 tns plugin add nativescript-cfalert-dialog
 ```
 
+## Configuration
+
+no configuration step involved
+
 ## Usage 
 
 NativeScript Core with { TypeScript } (works on Core, Angular and Vue as well)
