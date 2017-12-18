@@ -66,39 +66,39 @@ export interface DialogOptions {
     };
 }
 
-declare var com: any;
-declare var android: any;
-var Builder = com.crowdfire.cfalertdialog.CFAlertDialog.Builder;
+declare const com: any;
+declare const android: any;
+const Builder = com.crowdfire.cfalertdialog.CFAlertDialog.Builder;
 
-var notificationStyle =
+const notificationStyle =
     com.crowdfire.cfalertdialog.CFAlertDialog.CFAlertStyle.NOTIFICATION;
-var alertStyle = com.crowdfire.cfalertdialog.CFAlertDialog.CFAlertStyle.ALERT;
-var bottomSheetStyle =
+const alertStyle = com.crowdfire.cfalertdialog.CFAlertDialog.CFAlertStyle.ALERT;
+const bottomSheetStyle =
     com.crowdfire.cfalertdialog.CFAlertDialog.CFAlertStyle.BOTTOM_SHEET;
-var styles = [notificationStyle, alertStyle, bottomSheetStyle];
+const styles = [notificationStyle, alertStyle, bottomSheetStyle];
 
-var actionDefault =
+const actionDefault =
     com.crowdfire.cfalertdialog.CFAlertDialog.CFAlertActionStyle.DEFAULT;
-var actionNegative =
+const actionNegative =
     com.crowdfire.cfalertdialog.CFAlertDialog.CFAlertActionStyle.NEGATIVE;
-var actionPositive =
+const actionPositive =
     com.crowdfire.cfalertdialog.CFAlertDialog.CFAlertActionStyle.POSITIVE;
-var actionStyles = [actionDefault, actionNegative, actionPositive];
+const actionStyles = [actionDefault, actionNegative, actionPositive];
 
-var alignStart =
+const alignStart =
     com.crowdfire.cfalertdialog.CFAlertDialog.CFAlertActionAlignment.START;
-var alignEnd =
+const alignEnd =
     com.crowdfire.cfalertdialog.CFAlertDialog.CFAlertActionAlignment.END;
-var alignCenter =
+const alignCenter =
     com.crowdfire.cfalertdialog.CFAlertDialog.CFAlertActionAlignment.CENTER;
-var alignJustified =
+const alignJustified =
     com.crowdfire.cfalertdialog.CFAlertDialog.CFAlertActionAlignment.JUSTIFIED;
-var alignment = [alignStart, alignEnd, alignCenter, alignJustified];
+const alignment = [alignStart, alignEnd, alignCenter, alignJustified];
 
-var gravityStart = android.view.Gravity.START;
-var gravityCenterHorizontal = android.view.Gravity.CENTER_HORIZONTAL;
-var gravityEnd = android.view.Gravity.END;
-var gravity = [gravityStart, gravityCenterHorizontal, gravityEnd];
+const gravityStart = android.view.Gravity.START;
+const gravityCenterHorizontal = android.view.Gravity.CENTER_HORIZONTAL;
+const gravityEnd = android.view.Gravity.END;
+const gravity = [gravityStart, gravityCenterHorizontal, gravityEnd];
 
 class Listener implements android.content.DialogInterface.OnClickListener {
     public onClick(dialog, which) {
@@ -113,7 +113,7 @@ export class CFAlertDialog {
             dialogStyle: alertStyle
         };
 
-        var builder = new Builder(app.android.foregroundActivity);
+        const builder = new Builder(app.android.foregroundActivity);
 
         if (typeof options.dialogStyle !== undefined) {
             builder.setDialogStyle(styles[options.dialogStyle]);
@@ -212,7 +212,7 @@ export class CFAlertDialog {
             );
         }
 
-        var alertDialog = builder.show();
+        const alertDialog = builder.show();
 
         if (options.titleColor) {
             alertDialog.setTitleColor(new Color(options.titleColor).android);
