@@ -82,8 +82,8 @@ export class CFAlertDialog {
         }
         if (options.messageColor)
             options.messageColor = new Color(options.messageColor).ios;
-        if (!options.textAlignment)
-            options.textAlignment = CFAlertGravity.CENTER_HORIZONTAL;
+        if (typeof options.textAlignment === undefined)
+            options.textAlignment = CFAlertGravity.START;
 
         const viewController = frame.topmost().currentPage.ios;
         const alertController = CFAlertViewController.alloc().initWithTitleTitleColorMessageMessageColorTextAlignmentPreferredStyleHeaderViewFooterViewDidDismissAlertHandler(
