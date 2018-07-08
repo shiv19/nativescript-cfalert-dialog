@@ -33,29 +33,27 @@ export interface DialogOptions {
     cancellable?: boolean;
     headerView?: any; // nativeView
     footerView?: any; // nativeView
-    onDismiss?: Function; // calback for dismiss
-    buttons?: [
-        {
-            text: string; // title
-            buttonStyle: CFAlertActionStyle;
-            buttonAlignment?: CFAlertActionAlignment;
-            textColor?: string;
-            backgroundColor?: string;
-            onClick: Function;
-        }
-    ];
+    onDismiss?: Function; // callback for dismiss
+    buttons?: Array<{
+        text: string; // title
+        buttonStyle: CFAlertActionStyle;
+        buttonAlignment?: CFAlertActionAlignment;
+        textColor?: string;
+        backgroundColor?: string;
+        onClick: Function;
+    }>;
     simpleList?: {
-        items: [string];
+        items: Array<string>;
         onClick: Function;
     };
     singleChoiceList?: {
-        items: [string];
+        items: Array<string>;
         selectedItem: number;
         onClick: Function;
     };
     multiChoiceList?: {
-        items: [string];
-        selectedItems: [boolean];
+        items: Array<string>;
+        selectedItems: Array<boolean>;
         onClick: Function;
     };
 }
