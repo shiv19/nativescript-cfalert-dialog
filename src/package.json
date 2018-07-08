@@ -1,6 +1,6 @@
 {
     "name": "nativescript-cfalert-dialog",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "description": "CFAlert Dialog wrapper for NativeScript",
     "main": "cfalert-dialog",
     "typings": "index.d.ts",
