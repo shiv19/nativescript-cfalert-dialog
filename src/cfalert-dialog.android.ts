@@ -126,7 +126,7 @@ export class CFAlertDialog {
             builder.setMessage(options.message);
         }
 
-        if (typeof options.textAlignment !== undefined) {
+        if (options.textAlignment !== undefined) {
             builder.setTextGravity(gravity[options.textAlignment]);
         }
 
@@ -139,7 +139,7 @@ export class CFAlertDialog {
             builder.setTextColor(new Color(options.textColor).android);
         }
 
-        if (options.cancellable) {
+        if (options.cancellable !== undefined) {
             builder.setCancelable(options.cancellable);
         }
 
