@@ -13,13 +13,7 @@ import { Label } from "tns-core-modules/ui/label";
 import * as frame from "tns-core-modules/ui/frame";
 
 export class HelloWorldModel extends Observable {
-    private cfalertDialog: CFAlertDialog;
-
-    constructor() {
-        super();
-
-        this.cfalertDialog = new CFAlertDialog();
-    }
+    private cfalertDialog: CFAlertDialog = new CFAlertDialog();
 
     showNotification = function() {
         let options: DialogOptions = {
