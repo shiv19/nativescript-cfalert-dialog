@@ -100,6 +100,10 @@ export class CFAlertDialog {
             }
         );
 
+        if (options.cancellable !== undefined) {
+          alertController.shouldDismissOnBackgroundTap = options.cancellable
+        }
+        
         if (options.backgroundBlur) {
             alertController.backgroundStyle =
                 CFAlertControllerBackgroundStyle.Blur;
