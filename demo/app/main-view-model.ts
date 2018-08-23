@@ -130,7 +130,7 @@ export class HelloWorldModel extends Observable {
     };
 
     showMultiChoiceList = function() {
-        let itemState: [boolean] = [false, false, false, false];
+        let itemState: boolean[] = [false, false, false, false];
         let options: DialogOptions = {
             dialogStyle: CFAlertStyle.ALERT,
             title: "This is a simple list!",
