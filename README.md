@@ -57,6 +57,10 @@ cfalertDialog.show(options); // That's about it ;)
 
 Shows the CFAlert Dialog based on the options provided
 
+`dismiss(animate:boolean): void;`
+
+Dismiss the CFAlert Dialog (animate option effective on iOS only)
+
 ## Options format
 
 ```javascript

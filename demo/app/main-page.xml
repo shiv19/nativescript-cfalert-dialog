@@ -4,9 +4,11 @@
     <ActionBar class="action-bar" title="CFAlert Dialog Demo">
     </ActionBar>
   </Page.actionBar>
+  
   <GridLayout rows="" columns="">
       <Image src="~/landscape.jpg" stretch="aspectFill" />
       <StackLayout class="p-20">
+        <Button class="btn btn-primary" text="Auto-Dismissable Alert" tap="{{ autoDismissableNotification }}" />
         <Button class="btn btn-primary" text="Show Notification" tap="{{ showNotification }}" />
         <Button class="btn btn-primary" text="Show Alert" tap="{{ showAlert }}" />
         <Button class="btn btn-primary" text="Show Bottom Sheet" tap="{{ showBottomSheet }}" />
