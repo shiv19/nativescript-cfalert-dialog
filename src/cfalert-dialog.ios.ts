@@ -6,8 +6,6 @@ declare const CFAlertViewController
 declare const CFAlertAction
 declare const CFAlertControllerBackgroundStyle
 
-
-import { CFAlertStyle, CFAlertActionStyle, CFAlertGravity, }
 export enum CFAlertStyle {
   ALERT = 0,
   BOTTOM_SHEET = 1,
@@ -114,7 +112,7 @@ export class CFAlertDialog {
 
   public dismiss(animated: boolean) {
     if (!this._alertController) return
-    try{
+    try {
       this._alertController.dismissAlertWithAnimationCompletion(animated, () => {})
     } catch (e) {}
   }
@@ -123,7 +121,7 @@ export class CFAlertDialog {
    *. Private
    */
 
-  private _addActions(buttons) {
+  private _addActions(buttons = []) {
     buttons.forEach(btnOpts => {
       if (!btnOpts.buttonAlignment) btnOpts.buttonAlignment = CFAlertActionAlignment.JUSTIFIED
       if (btnOpts.textColor) btnOpts.textColor = new Color(btnOpts.textColor).ios
