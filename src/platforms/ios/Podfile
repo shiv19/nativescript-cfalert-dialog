@@ -1,4 +1,4 @@
-pod 'CFAlertViewController', '~> 3.0'
+pod 'CFAlertViewController'
 
 post_install do |installer|
     installer.pods_project.targets.each do |target|
