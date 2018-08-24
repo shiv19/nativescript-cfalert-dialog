@@ -1,10 +1,10 @@
-import * as frame from 'tns-core-modules/ui/frame'
-import { Color } from 'tns-core-modules/color'
-import { ios } from 'tns-core-modules/ui/utils'
+import * as frame from 'tns-core-modules/ui/frame';
+import { Color } from 'tns-core-modules/color';
+import { ios } from 'tns-core-modules/ui/utils';
 
-declare const CFAlertViewController
-declare const CFAlertAction
-declare const CFAlertControllerBackgroundStyle
+declare const CFAlertViewController;
+declare const CFAlertAction;
+declare const CFAlertControllerBackgroundStyle;
 
 export enum CFAlertStyle {
   ALERT = 0,
@@ -32,32 +32,32 @@ export enum CFAlertGravity {
 }
 
 export interface DialogOptions {
-  dialogStyle: CFAlertStyle
-  title: string
-  titleColor?: string
-  message?: string
-  messageColor?: string
-  textColor?: string
-  textAlignment?: CFAlertGravity
-  backgroundColor?: string
-  backgroundBlur?: boolean
-  cancellable?: boolean
-  headerView?: any // nativeView
-  footerView?: any // nativeView
-  onDismiss?: Function // Callback for dismiss
+  dialogStyle: CFAlertStyle;
+  title: string;
+  titleColor?: string;
+  message?: string;
+  messageColor?: string;
+  textColor?: string;
+  textAlignment?: CFAlertGravity;
+  backgroundColor?: string;
+  backgroundBlur?: boolean;
+  cancellable?: boolean;
+  headerView?: any; // nativeView
+  footerView?: any; // nativeView
+  onDismiss?: Function; // Callback for dismiss
   buttons?: [
     {
-      text: string // title
-      buttonStyle: CFAlertActionStyle
-      buttonAlignment?: CFAlertActionAlignment
-      textColor?: string
-      backgroundColor?: string
-      onClick: Function
+      text: string; // title
+      buttonStyle: CFAlertActionStyle;
+      buttonAlignment?: CFAlertActionAlignment;
+      textColor?: string;
+      backgroundColor?: string;
+      onClick: Function;
     }
-  ]
-  simpleList?: any // android only
-  singleChoiceList?: any // android only
-  multiChoiceList?: any // android only.
+  ];
+  simpleList?: any; // android only
+  singleChoiceList?: any; // android only
+  multiChoiceList?: any; // android only.
 }
 
 const DEFAULT_DIALOG_OPTIONS: DialogOptions = {
@@ -66,23 +66,23 @@ const DEFAULT_DIALOG_OPTIONS: DialogOptions = {
   titleColor: 'black',
   messageColor: 'black',
   cancellable: true,
-}
+};
 
 export class CFAlertDialog {
-  private _alertController
+  private _alertController;
 
   public show(options: DialogOptions) {
     if (options.simpleList || options.singleChoiceList || options.multiChoiceList) {
-      return alert('Lists are not available on iOS.')
+      return alert('Lists are not available on iOS.');
     }
 
-    options = Object.assign({}, DEFAULT_DIALOG_OPTIONS, options)
-    options.titleColor = new Color(options.titleColor).ios
-    options.messageColor = new Color(options.messageColor).ios
+    options = Object.assign({}, DEFAULT_DIALOG_OPTIONS, options);
+    options.titleColor = new Color(options.titleColor).ios;
+    options.messageColor = new Color(options.messageColor).ios;
 
-    if (typeof options.textAlignment === undefined) options.textAlignment = CFAlertGravity.START
+    if (typeof options.textAlignment === undefined) options.textAlignment = CFAlertGravity.START;
 
-    const viewController = frame.topmost().currentPage.ios
+    const viewController = frame.topmost().currentPage.ios;
     this._alertController = CFAlertViewController.alloc().initWithTitleTitleColorMessageMessageColorTextAlignmentPreferredStyleHeaderViewFooterViewDidDismissAlertHandler(
       options.title,
       options.titleColor,
@@ -93,27 +93,27 @@ export class CFAlertDialog {
       options.headerView,
       options.footerView,
       () => {
-        if (options.onDismiss) options.onDismiss()
+        if (options.onDismiss) options.onDismiss();
       }
-    )
+    );
 
-    this._alertController.shouldDismissOnBackgroundTap = options.cancellable
+    this._alertController.shouldDismissOnBackgroundTap = options.cancellable;
     this._alertController.backgroundStyle = options.backgroundBlur
       ? CFAlertControllerBackgroundStyle.Blur
-      : CFAlertControllerBackgroundStyle.Plain
+      : CFAlertControllerBackgroundStyle.Plain;
 
     if (options.backgroundColor)
-      this._alertController.backgroundColor = new Color(options.backgroundColor).ios
+      this._alertController.backgroundColor = new Color(options.backgroundColor).ios;
 
-    this._addActions(options.buttons)
+    this._addActions(options.buttons);
 
-    viewController.presentViewControllerAnimatedCompletion(this._alertController, true, null)
+    viewController.presentViewControllerAnimatedCompletion(this._alertController, true, null);
   }
 
   public dismiss(animated: boolean) {
-    if (!this._alertController) return
+    if (!this._alertController) return;
     try {
-      this._alertController.dismissAlertWithAnimationCompletion(animated, () => {})
+      this._alertController.dismissAlertWithAnimationCompletion(animated, () => {});
     } catch (e) {}
   }
 
@@ -123,9 +123,9 @@ export class CFAlertDialog {
 
   private _addActions(buttons = []) {
     buttons.forEach(btnOpts => {
-      if (!btnOpts.buttonAlignment) btnOpts.buttonAlignment = CFAlertActionAlignment.JUSTIFIED
-      if (btnOpts.textColor) btnOpts.textColor = new Color(btnOpts.textColor).ios
-      if (btnOpts.backgroundColor) btnOpts.backgroundColor = new Color(btnOpts.backgroundColor).ios
+      if (!btnOpts.buttonAlignment) btnOpts.buttonAlignment = CFAlertActionAlignment.JUSTIFIED;
+      if (btnOpts.textColor) btnOpts.textColor = new Color(btnOpts.textColor).ios;
+      if (btnOpts.backgroundColor) btnOpts.backgroundColor = new Color(btnOpts.backgroundColor).ios;
       const btn = CFAlertAction.alloc().initWithTitleStyleAlignmentBackgroundColorTextColorHandler(
         btnOpts.text,
         btnOpts.buttonStyle,
@@ -133,8 +133,8 @@ export class CFAlertDialog {
         btnOpts.backgroundColor,
         btnOpts.textColor,
         action => btnOpts.onClick(action.title)
-      )
-      this._alertController.addAction(btn)
-    })
+      );
+      this._alertController.addAction(btn);
+    });
   }
 }
