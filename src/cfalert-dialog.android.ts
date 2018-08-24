@@ -130,8 +130,8 @@ export class CFAlertDialog {
       options.buttons.forEach(button => {
         builder.addButton(
           button.text,
-          -1,
-          -1,
+          button.textColor ? new Color(button.textColor).android : -1,
+          button.backgroundColor ? new Color(button.backgroundColor).android : -1,
           actionStyles[button.buttonStyle],
           alignment[button.buttonAlignment],
           new android.content.DialogInterface.OnClickListener({
