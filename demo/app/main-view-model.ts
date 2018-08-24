@@ -31,7 +31,7 @@ export class HelloWorldModel extends Observable {
           buttonStyle: CFAlertActionStyle.POSITIVE,
           buttonAlignment: CFAlertActionAlignment.END,
           textColor: '#FFFFFF',
-          backgroundColor: '#000000',
+          backgroundColor: '#F58476',
           onClick: function(response) {
             console.log(response);
           },
