@@ -62,7 +62,7 @@ export interface DialogOptions {
 
 const DEFAULT_DIALOG_OPTIONS: DialogOptions = {
   dialogStyle: CFAlertStyle.ALERT,
-  title: 'Hello world!',
+  title: '',
   titleColor: 'black',
   messageColor: 'black',
   cancellable: true,
