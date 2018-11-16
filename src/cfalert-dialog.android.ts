@@ -172,7 +172,7 @@ export class CFAlertDialog {
     if (options.multiChoiceList) {
       builder.setMultiChoiceItems(
         options.multiChoiceList.items,
-        [false, false, false, false],
+        options.multiChoiceList.selectedItems,
         new android.content.DialogInterface.OnMultiChoiceClickListener({
           onClick: (dialogInterface, index, b) => {
             options.multiChoiceList.onClick(dialogInterface, index, b);
