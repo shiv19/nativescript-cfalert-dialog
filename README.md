@@ -53,9 +53,10 @@ cfalertDialog.show(options); // That's about it ;)
 
 ## API
 
-`show(options): void;`
+`show(options): Promise<string>;`
 
-Shows the CFAlert Dialog based on the options provided
+Shows the CFAlert Dialog based on the options provided.
+It returns a promise which can either resolve with a button title (if button was clicked), or it can resolve empty (undefined).
 
 `dismiss(animate:boolean): void;`
 

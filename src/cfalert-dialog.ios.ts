@@ -72,10 +72,6 @@ export class CFAlertDialog {
   private _alertController;
 
   public show(options: DialogOptions) {
-    if (options.simpleList || options.singleChoiceList || options.multiChoiceList) {
-      return alert('Lists are not available on iOS.');
-    }
-
     options = Object.assign({}, DEFAULT_DIALOG_OPTIONS, options);
     options.titleColor = new Color(options.titleColor).ios;
     options.messageColor = new Color(options.messageColor).ios;
@@ -83,31 +79,40 @@ export class CFAlertDialog {
     if (typeof options.textAlignment === undefined) options.textAlignment = CFAlertGravity.START;
 
     const viewController = frame.topmost().currentPage.ios;
-    this._alertController = CFAlertViewController.alloc().initWithTitleTitleColorMessageMessageColorTextAlignmentPreferredStyleHeaderViewFooterViewDidDismissAlertHandler(
-      options.title,
-      options.titleColor,
-      options.message,
-      options.messageColor,
-      options.textAlignment,
-      options.dialogStyle,
-      options.headerView,
-      options.footerView,
-      () => {
-        if (options.onDismiss) options.onDismiss();
+
+    return new Promise((resolve, _) => {
+      if (options.simpleList || options.singleChoiceList || options.multiChoiceList) {
+        alert('Lists are not available on iOS.');
+        resolve('Lists are not available on iOS.');
+        return;
       }
-    );
-
-    this._alertController.shouldDismissOnBackgroundTap = options.cancellable;
-    this._alertController.backgroundStyle = options.backgroundBlur
-      ? CFAlertControllerBackgroundStyle.Blur
-      : CFAlertControllerBackgroundStyle.Plain;
-
-    if (options.backgroundColor)
-      this._alertController.backgroundColor = new Color(options.backgroundColor).ios;
-
-    this._addActions(options.buttons);
-
-    viewController.presentViewControllerAnimatedCompletion(this._alertController, true, null);
+      this._alertController = CFAlertViewController.alloc().initWithTitleTitleColorMessageMessageColorTextAlignmentPreferredStyleHeaderViewFooterViewDidDismissAlertHandler(
+        options.title,
+        options.titleColor,
+        options.message,
+        options.messageColor,
+        options.textAlignment,
+        options.dialogStyle,
+        options.headerView,
+        options.footerView,
+        () => {
+          if (options.onDismiss) options.onDismiss();
+          resolve();
+        }
+      );
+  
+      this._alertController.shouldDismissOnBackgroundTap = options.cancellable;
+      this._alertController.backgroundStyle = options.backgroundBlur
+        ? CFAlertControllerBackgroundStyle.Blur
+        : CFAlertControllerBackgroundStyle.Plain;
+  
+      if (options.backgroundColor)
+        this._alertController.backgroundColor = new Color(options.backgroundColor).ios;
+  
+      this._addActions(options.buttons, resolve);
+  
+      viewController.presentViewControllerAnimatedCompletion(this._alertController, true, null);
+    });
   }
 
   public dismiss(animated: boolean) {
@@ -121,7 +126,7 @@ export class CFAlertDialog {
    *. Private
    */
 
-  private _addActions(buttons = []) {
+  private _addActions(buttons = [], resolve) {
     buttons.forEach(btnOpts => {
       if (!btnOpts.buttonAlignment) btnOpts.buttonAlignment = CFAlertActionAlignment.JUSTIFIED;
       if (btnOpts.textColor) btnOpts.textColor = new Color(btnOpts.textColor).ios;
@@ -132,7 +137,10 @@ export class CFAlertDialog {
         btnOpts.buttonAlignment,
         btnOpts.backgroundColor,
         btnOpts.textColor,
-        action => btnOpts.onClick(action.title)
+        action => {
+          btnOpts.onClick(action.title)
+          resolve(action.title);
+        }
       );
       this._alertController.addAction(btn);
     });

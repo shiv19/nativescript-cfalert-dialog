@@ -126,78 +126,82 @@ export class CFAlertDialog {
     if (options.headerView) builder.setHeaderView(options.headerView);
     if (options.footerView) builder.setFooterView(options.footerView);
 
-    if (options.buttons) {
-      options.buttons.forEach(button => {
-        builder.addButton(
-          button.text,
-          button.textColor ? new Color(button.textColor).android : -1,
-          button.backgroundColor ? new Color(button.backgroundColor).android : -1,
-          actionStyles[button.buttonStyle],
-          alignment[button.buttonAlignment],
+    return new Promise((resolve, _) => {
+      if (options.buttons) {
+        options.buttons.forEach(button => {
+          builder.addButton(
+            button.text,
+            button.textColor ? new Color(button.textColor).android : -1,
+            button.backgroundColor ? new Color(button.backgroundColor).android : -1,
+            actionStyles[button.buttonStyle],
+            alignment[button.buttonAlignment],
+            new android.content.DialogInterface.OnClickListener({
+              onClick: (dialog, which) => {
+                button.onClick(button.text);
+                dialog.dismiss();
+                resolve(button.text);
+              },
+            })
+          );
+        });
+      }
+  
+      // this._buildSimpleList()
+      if (options.simpleList) {
+        builder.setItems(
+          options.simpleList.items,
           new android.content.DialogInterface.OnClickListener({
-            onClick: (dialog, which) => {
-              button.onClick(button.text);
-              dialog.dismiss();
+            onClick: (dialogInterface, index) => {
+              options.simpleList.onClick(dialogInterface, index);
+              dialogInterface.dismiss();
             },
           })
         );
-      });
-    }
-
-    // this._buildSimpleList()
-    if (options.simpleList) {
-      builder.setItems(
-        options.simpleList.items,
-        new android.content.DialogInterface.OnClickListener({
-          onClick: (dialogInterface, index) => {
-            options.simpleList.onClick(dialogInterface, index);
-            dialogInterface.dismiss();
-          },
-        })
-      );
-    }
-
-    if (options.singleChoiceList) {
-      builder.setSingleChoiceItems(
-        options.singleChoiceList.items,
-        options.singleChoiceList.selectedItem,
-        new android.content.DialogInterface.OnClickListener({
-          onClick: (dialogInterface, index) => {
-            options.singleChoiceList.onClick(dialogInterface, index);
-          },
-        })
-      );
-    }
-
-    if (options.multiChoiceList) {
-      builder.setMultiChoiceItems(
-        options.multiChoiceList.items,
-        options.multiChoiceList.selectedItems,
-        new android.content.DialogInterface.OnMultiChoiceClickListener({
-          onClick: (dialogInterface, index, b) => {
-            options.multiChoiceList.onClick(dialogInterface, index, b);
-          },
-        })
-      );
-    }
-
-    this._alertDialog = builder.show();
-
-    if (options.titleColor) {
-      this._alertDialog.setTitleColor(new Color(options.titleColor).android);
-    }
-    if (options.messageColor) {
-      this._alertDialog.setMessageColor(new Color(options.messageColor).android);
-    }
-    if (options.onDismiss) {
-      this._alertDialog.setOnDismissListener(
-        new android.content.DialogInterface.OnDismissListener({
-          onDismiss: () => {
-            options.onDismiss();
-          },
-        })
-      );
-    }
+      }
+  
+      if (options.singleChoiceList) {
+        builder.setSingleChoiceItems(
+          options.singleChoiceList.items,
+          options.singleChoiceList.selectedItem,
+          new android.content.DialogInterface.OnClickListener({
+            onClick: (dialogInterface, index) => {
+              options.singleChoiceList.onClick(dialogInterface, index);
+            },
+          })
+        );
+      }
+  
+      if (options.multiChoiceList) {
+        builder.setMultiChoiceItems(
+          options.multiChoiceList.items,
+          options.multiChoiceList.selectedItems,
+          new android.content.DialogInterface.OnMultiChoiceClickListener({
+            onClick: (dialogInterface, index, b) => {
+              options.multiChoiceList.onClick(dialogInterface, index, b);
+            },
+          })
+        );
+      }
+  
+      this._alertDialog = builder.show();
+  
+      if (options.titleColor) {
+        this._alertDialog.setTitleColor(new Color(options.titleColor).android);
+      }
+      if (options.messageColor) {
+        this._alertDialog.setMessageColor(new Color(options.messageColor).android);
+      }
+      if (options.onDismiss) {
+        this._alertDialog.setOnDismissListener(
+          new android.content.DialogInterface.OnDismissListener({
+            onDismiss: () => {
+              options.onDismiss();
+              resolve();
+            },
+          })
+        );
+      }
+    });
   }
 
   public dismiss(animated: boolean) {

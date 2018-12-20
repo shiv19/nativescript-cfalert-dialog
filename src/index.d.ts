@@ -58,5 +58,5 @@ export interface DialogOptions {
     };
 }
 export declare class CFAlertDialog {
-    show(options: any): void;
+    show(options: any): Promise<{}>;
 }

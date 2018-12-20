@@ -79,7 +79,10 @@ export class HelloWorldModel extends Observable {
         },
       ],
     };
-    this.cfalertDialog.show(options);
+    this.cfalertDialog.show(options)
+      .then(res => {
+        console.log('After await', res);
+      })
   };
 
   showSimpleList = function() {
