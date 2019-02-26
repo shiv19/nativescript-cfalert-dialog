@@ -59,4 +59,5 @@ export interface DialogOptions {
 }
 export declare class CFAlertDialog {
     show(options: any): Promise<{}>;
+    dismiss(animate: boolean): void;
 }
